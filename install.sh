@@ -6,7 +6,7 @@ cd $SOURCE
 echo "Please wait..."
 set -e
 sudo apt-get install -qq --assume-yes \
-supervisor redis-server \
+supervisor redis-server curl \
 python-pip python-dev make build-essential \
 libtiff5-dev libjpeg8-dev zlib1g-dev \
 libfreetype6-dev liblcms2-dev \
