@@ -12,15 +12,15 @@ libtiff5-dev libjpeg8-dev zlib1g-dev \
 libfreetype6-dev liblcms2-dev \
 libwebp-dev tcl8.6-dev tk8.6-dev python-tk \
 libexiv2-dev libgexiv2-2 gir1.2-gexiv2-0.10 \
-libmagickwand-dev ufraw dcraw wget
+libmagickwand-dev ufraw dcraw wget nginx
 
 sudo pip install tornado tornadotools redis pillow Wand piexif
 set +e
 
-sudo sed -e "s|\${root}|${SOURCE}|g" $SOURCE/cfg/example_supervisord.conf > /etc/supervisor/conf.d/example_supervisord.conf
-sudo service supervisor restart
+sed -e "s|\${root}|${SOURCE}|g" $SOURCE/cfg/example_supervisord.conf | sudo tee /etc/supervisor/conf.d/example_supervisord.conf
+sed -e "s|\${static}|${SOURCE}|g" $SOURCE/cfg/example_nginx.conf | sudo tee /etc/nginx/conf.d/example_nginx.conf
 
-sudo sed -e "s|\${static}|${SOURCE}|g" $SOURCE/cfg/example_nginx.conf > /etc/nginx/conf.d/example_nginx.conf
+sudo service supervisor restart
 sudo service nginx restart
 
 echo "DONE"
