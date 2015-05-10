@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><title>EXIF Example</title>
+  </head>
+  <body>
+      {% if handler.error %}
+          <div align = "center">ERROR: {{handler.error}}</div>
+      {% end %}
+      <form action="/" method="POST"  
+         enctype="multipart/form-data">  
+      <input type="text" name="name" placeholder="image name..." required>    
+      <input type="file" name="file" required>  
+      <input type='submit' value='Upload' name='act'> 
+      </form>
+      {% if desc_list %}
+        {% set page = handler.page %}
+        {% set value = handler.get_argument('value', '') %}
+        {% if have_more or page > 1 %}
+        <table style="width: 100%">
+          <tr>
+            <td align = "right">
+                {% if page > 1 %}
+                    <a href="/?page={{page-1}}">Previous page</a>
+                {% end %}                
+                {% if have_more > 100 %}
+                    <a href="/?page={{page+1}}">Next page</a>
+                {% end %}
+            </td>
+          <tr>
+        </table>
+        {% end %}
+        <table width="100%" border = "1">
+          <tr align = "center">
+            <td>Preview</td>
+            <td>Name</td>
+            <td>Upload date</td>
+            <td>Creation date</td>
+            <td>Camera</td>
+            <td>File size</td>
+            <td>Actions</td>
+          </tr>
+        {% for item in desc_list %}
+          <tr align = "center">
+            <td><a href="/static/{{ item.hash_value + '.jpg' }}">
+              <img src="/static/{{ item.hash_value + '_thumb.jpg' }}"></a></td>
+            <td>{{item.name}}</td>
+            <td>{{item.upload_date}}</td>
+            <td>{{item.creation_date}}</td>
+            <td>{{item.camera}}</td>
+            <td>{{item.size}}</td>
+            <td>
+              <form action="/" method="POST">  
+              <input type="hidden" name="hash_value" value="{{ item.hash_value }}">
+              <input type='submit' value='Delete' name='act'> 
+              </form>
+            </td>
+          </tr>
+        {% end %}
+        {% if have_more > 100 or page > 1 %}
+          <tr>
+            <td align = "right">
+                {% if page > 1 %}
+                    <a href="/?page={{page-1}}">Previous page</a>
+                {% end %}                
+                {% if have_more > 100 %}
+                    <a href="/?page={{page+1}}">Next page</a>
+                {% end %}
+            </td>
+          <tr>
+        </table>
+        {% end %}
+    {% end %}
+  </body>
+</html>
