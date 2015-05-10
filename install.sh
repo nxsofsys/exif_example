@@ -17,8 +17,8 @@ libmagickwand-dev ufraw dcraw wget nginx
 sudo pip install tornado tornadotools redis pillow Wand piexif
 set +e
 
-sed -e "s|\${root}|${SOURCE}|g" $SOURCE/cfg/example_supervisord.conf | sudo tee /etc/supervisor/conf.d/example_supervisord.conf
-sed -e "s|\${static}|${SOURCE}|g" $SOURCE/cfg/example_nginx.conf | sudo tee /etc/nginx/conf.d/example_nginx.conf
+sed -e "s|\${root}|${SOURCE}|g" $SOURCE/cfg/example_supervisord.conf | sudo tee /etc/supervisor/conf.d/example_supervisord.conf > /dev/null
+sed -e "s|\${static}|${SOURCE}|g" $SOURCE/cfg/example_nginx.conf | sudo tee /etc/nginx/conf.d/example_nginx.conf > /dev/null
 
 sudo service supervisor restart
 sudo service nginx restart
